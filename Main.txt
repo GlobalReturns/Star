@@ -2,20 +2,6 @@ _G.SAEnabled = true
 -- // Services
 local Players = game:GetService("Players")
 
-local UserInputService = game:GetService("UserInputService")
-
-UserInputService.InputEnded:Connect(function(input, gameProcessed)
-    if input.UserInputType == Enum.UserInputType.Keyboard then
-        local keyPressed = input.KeyCode
-        if keyPressed.Name == 'RightBracket' then
-            SilentAim.FOV = Aiming.FOV + 1
-        end
-        if keyPressed.Name == 'LeftBracket' then
-            SilentAim.FOV = Aiming.FOV - 1
-        end
-    end
-end)
-
 -- // Vars
 local LocalPlayer = Players.LocalPlayer
 local accomidationfactor = 0.08
@@ -23,6 +9,20 @@ local accomidationfactor = 0.08
 -- // Silent Aim Module
 local SilentAim = loadstring(game:HttpGet("https://raw.githubusercontent.com/GlobalReturns/Star/main/Adjust.txt"))()
 SilentAim.TeamCheck = false
+
+local UserInputService = game:GetService("UserInputService")
+
+UserInputService.InputEnded:Connect(function(input, gameProcessed)
+    if input.UserInputType == Enum.UserInputType.Keyboard then
+        local keyPressed = input.KeyCode
+        if keyPressed.Name == 'RightBracket' then
+            SilentAim.FOV = SilentAim.FOV + 1
+        end
+        if keyPressed.Name == 'LeftBracket' then
+            SilentAim.FOV = SilentAim.FOV - 1
+        end
+    end
+end)
 
 -- // Metatable vars
 local mt = getrawmetatable(game)
