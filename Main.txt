@@ -1,18 +1,9 @@
+_G.SAEnabled = true
 -- // Services
 local Players = game:GetService("Players")
 
 local NotificationBindable = Instance.new("BindableFunction")
 NotificationBindable.OnInvoke = callback
---
-game.StarterGui:SetCore("SendNotification",  {
- Title = "Gavs Private Lock";
- Text = "Made By Flood";
- Icon = "rbxassetid://7242945462";
- Duration = 9999999999;
- Button1 = "Accept";
- Button2 = "Im Gay";
- Callback = NotificationBindable;
-})
 
 -- // Vars
 local LocalPlayer = Players.LocalPlayer
@@ -41,7 +32,7 @@ mt.__index = newcclosure(function(t, k)
     if (t:IsA("Mouse") and (k == "Hit")) then
         
         local CPlayer = SilentAim.Selected
-        if (SilentAim.checkSilentAim()) then
+        if (SilentAim.checkSilentAim()) and _G.SAEnabled then
             if (CPlayer.Character:FindFirstChild("UpperTorso")) then
                 return {p=(CPlayer.Character.UpperTorso.CFrame.p+(CPlayer.Character.UpperTorso.Velocity*accomidationfactor))}
             end
@@ -52,10 +43,27 @@ end)
 
 -- // Revert
 setreadonly(mt, true)
-local function callback(Text)
- if Text == "Button1 text" then
-  print ("Answer")
-elseif Text == ("Button2 text") then
- print ("Answer2")
- end
+-- // Mains
+game:GetService("UserInputService").InputBegan:connect(function(input)
+if input.KeyCode == Enum.KeyCode.V then
+_G.SAEnabled = true
 end
+end)
+--
+game:GetService("UserInputService").InputBegan:connect(function(input)
+if input.KeyCode == Enum.KeyCode.C then
+_G.SAEnabled = false
+end
+end)
+-- // Fov
+game:GetService("UserInputService").InputBegan:connect(function(input)
+if input.KeyCode == Enum.KeyCode.Minus then
+SilentAim.ShowFOV = SilentAim.ShowFOV == true
+end
+end)
+--
+game:GetService("UserInputService").InputBegan:connect(function(input)
+if input.KeyCode == Enum.KeyCode.Equals then
+SilentAim.ShowFOV = SilentAim.ShowFOV == false
+end
+end)
